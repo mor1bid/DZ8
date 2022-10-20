@@ -1,15 +1,5 @@
-hwtxt = ''
-lsntxt = ''
 i = 0
 print('Здравствуйте!', end=' ')
-def add_work(hwtxt):
-    with open('homework.txt', 'r') as hw:
-        hwtxt = hw.readlines()
-        return hwtxt
-def add_lsn(lsntxt):
-    with open('lessons.txt', 'r') as lsn:
-        lsntxt = lsn.readlines()
-        return lsntxt
 while True:
     if i == 1:
         print('\nГотово!', end=' ')
@@ -20,14 +10,20 @@ while True:
         studword = input('Пароль: ')
         while i == 0:
             print('\n')
-            print(login, end=' - ')
+            print(login, end=', ')
             answ = input('пожалуйста, выберите желаемое действие:\n\n(1) Посмотреть расписание\n(2) Посмотреть домашнее задание\n(e) Выход\n\n')
             if answ == '1':
-                # for line in lsntxt:
-                print(add_lsn(lsntxt))
+                with open('lessons.txt', 'r', encoding='UTF-8') as lsn:
+                    lsntxt = lsn.readlines()
+                    print('\n')
+                    for line in lsntxt:
+                        print(line)
             elif answ == '2':
-                # for line in hwtxt:
-                print(add_work(hwtxt))
+                with open('homework.txt', 'r', encoding='UTF-8') as hw:
+                    hwtxt = hw.readlines()
+                    print('\n')
+                    for line in hwtxt:
+                        print(line)
             elif answ == 'e':
                 i += 1
             else:
@@ -41,14 +37,20 @@ while True:
             print(login, end=', ')
             answ = input('пожалуйста, выберите желаемое действие:\n\n(1) Посмотреть расписание\n(2) Посмотреть домашнее задание\n(3) Добавить домашнее задание\n(4) Убрать домашнее задание\n(e) Выход\n\n')
             if answ == '1':
-                # for line in lsntxt:
-                print(add_lsn(lsntxt))
+                with open('lessons.txt', 'r', encoding='UTF-8') as lsn:
+                    lsntxt = lsn.readlines()
+                    print('\n')
+                    for line in lsntxt:
+                        print(line)
             elif answ == '2':
-                # for line in hwtxt:
-                print(add_work(hwtxt))
+                with open('homework.txt', 'r', encoding='UTF-8') as hw:
+                    hwtxt = hw.readlines()
+                    print('\n')
+                    for line in hwtxt:
+                        print(line)
             elif answ == '3':
                 put = 1
-                with open('homework.txt', 'a') as work:
+                with open('homework.txt', 'a', encoding='UTF-8') as work:
                     while put != 0:
                         print('\nНапишите дату сдачи, предмет и домашнее задание:')
                         if put > 1:
@@ -66,14 +68,14 @@ while True:
             elif answ == '4':
                 choi = input('\nУдалить данные?\nЕсли да - удалить все данные, либо выборочно? n/1/2: ')
                 if choi == '1':
-                    with open('homework.txt', 'w') as hw:
+                    with open('homework.txt', 'w', encoding='UTF-8') as hw:
                         hw.seek(0)
                         hw.truncate()
                 elif choi == '2':
                     cont = input('Введите фамилию желаемого контакта: \n')
-                    with open('homework.txt', 'r') as delread:
+                    with open('homework.txt', 'r', encoding='UTF-8') as delread:
                         text = delread.readlines()
-                        with open('homework.txt', 'w') as hw:
+                        with open('homework.txt', 'w', encoding='UTF-8') as hw:
                             call = 0
                             hw.seek(0)
                             for line in text:
