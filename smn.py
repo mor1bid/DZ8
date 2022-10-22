@@ -93,7 +93,6 @@ while True:
             else:
                 print('Ошибка!')
     elif menu == 'c':
-        call = 0
         i = 0
         admnlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
         admnword = input('Пароль: ')
@@ -111,31 +110,31 @@ while True:
                 j = 0
                 while j == 0:
                     choi = input('\n\n(1) Удалить предмет\n(2) Добавить предмет\n(e) Выход\n\n')
+                    call = 0
                     if choi == '1':
                         if call != 0:
                             print('\nГотово!\n')                        
                         day = input('Введите день недели, номер и название желаемого предмета:\nДень недели: ')
                         numb = input('\nНомер предмета: ')
-                        sub = input('\nНазвание предмета: ')
+                        # sub = input('\nНазвание предмета: ')
                         with open('lessons.txt', 'r', encoding='UTF-8') as lsn:
                             text = lsn.readlines()
+                            # print(list(text))
                         with open('lessons.txt', 'w', encoding='UTF-8') as edit:
                             edit.seek(0)
                             for line in text:
                                 if day in line and call == 0:
-                                    # edit.writelines(line)
-                                    call += 1
-                                if numb not in line and line != day and call == 1:
                                     edit.writelines(line)
-                                    # edit.write('. ')
-                                    call += 1
-                                elif call == 1:
+                                    call = 1
+                                elif day not in line:
+                                    edit.writelines(line)
+                                if numb not in line and call == 1:
+                                    edit.writelines(line)
+                                else:
                                     edit.writelines(numb)
                                     edit.write('. ')
-                                if sub not in line and call == 2:
-                                    edit.writelines(line)
                                 if line == ' \n':
-                                    call == 0
+                                    call = 0
                     elif choi == '2':
                         if call != 0:
                             print('\nГотово!\n')
