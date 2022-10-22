@@ -114,12 +114,10 @@ while True:
                     if choi == '1':
                         if call != 0:
                             print('\nГотово!\n')                        
-                        day = input('Введите день недели, номер и название желаемого предмета:\nДень недели: ')
+                        day = input('Введите день недели и номер желаемого предмета:\nДень недели: ')
                         numb = input('\nНомер предмета: ')
-                        # sub = input('\nНазвание предмета: ')
                         with open('lessons.txt', 'r', encoding='UTF-8') as lsn:
                             text = lsn.readlines()
-                            # print(list(text))
                         with open('lessons.txt', 'w', encoding='UTF-8') as edit:
                             edit.seek(0)
                             for line in text:
@@ -133,13 +131,7 @@ while True:
                                     call = 1
                                 if numb in line and call == 1 and day not in line:
                                     edit.write(numb)
-                                    edit.write('. \n')
-                                    # numb = ''
-
-                                # if sub not in line and call == 2:
-                                #     edit.writelines(line)
-                                # elif sub in line and call == 2:
-                                #     edit.writelines('')
+                                    edit.write('.\n')
                                 if ' \n' in line:
                                     call = 0
                     elif choi == '2':
@@ -155,16 +147,36 @@ while True:
                             edit.seek(0)
                             for line in text:
                                 if day in line and call == 0:
-                                    call += 1
-                                if numb in line and call == 1:
-                                    call += 1
-                                if line == ' \n' and call == 1:
+                                    edit.writelines(line)
+                                    call = 1
+                                if day not in line and call == 0:
+                                    edit.writelines(line)
+                                if numb not in line and day not in line and call == 1:
+                                    edit.writelines(line)
+                                    call = 1
+                                if numb in line and call == 1 and day not in line:
                                     edit.write(numb)
-                                    edit.write('. ')
-                                    call += 1
-                                if line == '  ' and call == 2:
-                                    edit.write(' ')
+                                    edit.write('.')
                                     edit.write(sub)
+                                    edit.write('\n')
+                                if ' \n' in line:
+                                    if call == 1:
+                                        edit.write(numb)
+                                        edit.write('. ')
+                                        edit.write(sub)
+                                        # edit.write('\n \n')
+                                    call = 0
+                                # if day in line and call == 0:
+                                #     call += 1
+                                # if numb in line and call == 1:
+                                #     call += 1
+                                # if line == ' \n' and call == 1:
+                                #     edit.write(numb)
+                                #     edit.write('. ')
+                                #     call += 1
+                                # if line == '  ' and call == 2:
+                                #     edit.write(' ')
+                                #     edit.write(sub)
                     elif choi == 'e':
                         j += 1
                     else:
