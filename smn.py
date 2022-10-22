@@ -82,12 +82,6 @@ while True:
                             for line in text:
                                 if day not in line and sub not in line and call == 0:
                                     hw.write(line)
-                                # else:
-                                #     call = 1
-                                # if line != ' \n' and call == 1:
-                                #     hw.write('')
-                                # else:
-                                #     call = 0
             elif answ == 'e':
                 i += 1
             else:
@@ -109,11 +103,9 @@ while True:
             elif answ == '2':
                 j = 0
                 while j == 0:
-                    choi = input('\n\n(1) Удалить предмет\n(2) Добавить предмет\n(e) Выход\n\n')
+                    choi = input('\n(1) Удалить предмет\n(2) Добавить предмет\n(e) Выход\n\n')
                     call = 0
-                    if choi == '1':
-                        if call != 0:
-                            print('\nГотово!\n')                        
+                    if choi == '1':                       
                         day = input('Введите день недели и номер желаемого предмета:\nДень недели: ')
                         numb = input('\nНомер предмета: ')
                         with open('lessons.txt', 'r', encoding='UTF-8') as lsn:
@@ -132,11 +124,12 @@ while True:
                                 if numb in line and call == 1 and day not in line:
                                     edit.write(numb)
                                     edit.write('.\n')
-                                if ' \n' in line:
+                                    call = 0
+                                if ' \n' in line and call == 1:
+                                    edit.write(numb)
+                                    edit.write('.\n')
                                     call = 0
                     elif choi == '2':
-                        if call != 0:
-                            print('\nГотово!\n')
                         call = 0
                         day = input('Введите день недели, номер и название желаемого предмета:\nДень недели: ')
                         numb = input('\nНомер предмета: ')
@@ -152,31 +145,25 @@ while True:
                                 if day not in line and call == 0:
                                     edit.writelines(line)
                                 if numb not in line and day not in line and call == 1:
-                                    edit.writelines(line)
                                     call = 1
+                                    if ' \n' in line:
+                                        lin = line.replace(' \n', '')
+                                        edit.write(lin)
+                                    else:
+                                        edit.writelines(line)
                                 if numb in line and call == 1 and day not in line:
                                     edit.write(numb)
-                                    edit.write('.')
+                                    edit.write('. ')
                                     edit.write(sub)
-                                    edit.write('\n')
-                                if ' \n' in line:
-                                    if call == 1:
-                                        edit.write(numb)
-                                        edit.write('. ')
-                                        edit.write(sub)
-                                        # edit.write('\n \n')
+                                    edit.write(' \n')
                                     call = 0
-                                # if day in line and call == 0:
-                                #     call += 1
-                                # if numb in line and call == 1:
-                                #     call += 1
-                                # if line == ' \n' and call == 1:
-                                #     edit.write(numb)
-                                #     edit.write('. ')
-                                #     call += 1
-                                # if line == '  ' and call == 2:
-                                #     edit.write(' ')
-                                #     edit.write(sub)
+                                if ' \n' in line and call == 1:
+                                    edit.write('\n')
+                                    edit.write(numb)
+                                    edit.write('. ')
+                                    edit.write(sub)
+                                    edit.write(' \n')
+                                    call = 0
                     elif choi == 'e':
                         j += 1
                     else:
