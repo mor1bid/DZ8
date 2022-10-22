@@ -6,11 +6,11 @@ while True:
     menu = input('Выберите желаемый пункт меню:\n\n(a) Студент\n(b) Преподаватель\n(c) Администратор\n(e) Завершение работы\n\n')
     if menu == 'a':
         i = 0
-        login = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
+        studlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
         studword = input('Пароль: ')
         while i == 0:
             print('\n')
-            print(login, end=', ')
+            print(studlogin, end=', ')
             answ = input('пожалуйста, выберите желаемое действие:\n\n(1) Посмотреть расписание\n(2) Посмотреть домашнее задание\n(e) Выход\n\n')
             if answ == '1':
                 with open('lessons.txt', 'r', encoding='UTF-8') as lsn:
@@ -30,11 +30,11 @@ while True:
                 print('Ошибка!')
     elif menu == 'b':
         i = 0
-        login = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
+        teachlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
         teachword = input('Пароль: ')
         while i == 0:
             print('\n')
-            print(login, end=', ')
+            print(teachlogin, end=', ')
             answ = input('пожалуйста, выберите желаемое действие:\n\n(1) Посмотреть расписание\n(2) Посмотреть домашнее задание\n(3) Добавить домашнее задание\n(4) Убрать домашнее задание\n(e) Выход\n\n')
             if answ == '1':
                 with open('lessons.txt', 'r', encoding='UTF-8') as lsn:
@@ -72,25 +72,81 @@ while True:
                         hw.seek(0)
                         hw.truncate()
                 elif choi == '2':
-                    cont = input('Введите фамилию желаемого контакта: \n')
+                    day = input('Введите дату сдачи (дд.мм.гг) и желаемый предмет:\nДата: ')
+                    sub = input('\nНазвание предмета: ')
                     with open('homework.txt', 'r', encoding='UTF-8') as delread:
                         text = delread.readlines()
                         with open('homework.txt', 'w', encoding='UTF-8') as hw:
                             call = 0
                             hw.seek(0)
                             for line in text:
-                                if cont not in line and call == 0:
+                                if day not in line and sub not in line and call == 0:
                                     hw.write(line)
-                                else:
-                                    call = 1
-                                if line != ' \n' and call == 1:
-                                    hw.write('')
-                                else:
-                                    call = 0
+                                # else:
+                                #     call = 1
+                                # if line != ' \n' and call == 1:
+                                #     hw.write('')
+                                # else:
+                                #     call = 0
             elif answ == 'e':
                 i += 1
             else:
                 print('Ошибка!')
+    elif menu == 'c':
+        i = 0
+        admnlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
+        admnword = input('Пароль: ')
+        while i == 0:
+            print('\n')
+            print(admnlogin, end=', ')
+            answ = input('пожалуйста, выберите желаемое действие:\n\n(1) Посмотреть расписание\n(2) Изменить расписание\n(3) Изменить входные данные\n(e) Выход\n\n')
+            with open('lessons.txt', 'r', encoding='UTF-8') as lsn:
+                text = lsn.readlines()
+                if answ == '1':
+                    # with open('lessons.txt', 'r', encoding='UTF-8') as lsn:
+                    lsntxt = lsn.readlines()
+                    print('\n')
+                    for line in lsntxt:
+                        print(line)
+                elif answ == '2':
+                    with open('lessons.txt', 'w', encoding='UTF-8') as edit:
+                        j = 0
+                        while j == 0:
+                            choi = input('\n\n(1) Удалить предмет\n(2) Добавить предмет\n(e) Выход\n\n')
+                        # with open('lessons.txt', 'a+', encoding='UTF-8') as lsn:
+                            text = lsn.readlines()
+                            if choi == '1':
+                                day = input('Введите день недели и желаемый предмет:\nДень недели: ')
+                                sub = input('\nНазвание предмета: ')
+                                edit.seek(0)
+                                for line in text:
+                                    if day not in line and sub not in line:
+                                        edit.write(line)
+                            elif choi == '2':
+                                if call > 0:
+                                    print('\nГотово!\n')
+                                call = 0
+                                day = input('Введите день недели, номер и название желаемого предмета:\nДень недели: ')
+                                numb = input('\nНомер предмета: ')
+                                sub = input('\nНазвание предмета: ')
+                                for line in text:
+                                    if day in line:
+                                        call += 1
+                                    if numb in line and call == 1:
+                                        call += 1
+                                    if ' \n' in line and call == 1:
+                                        edit.write(day)
+                                        edit.write('. ')
+                                    if '  ' in line and call == 2:
+                                        edit.write(' ')
+                                        edit.write(sub)
+                            elif choi == 'e':
+                                j += 1
+                            else:
+                                print('Ошибка!')
+
+                elif answ == 'e':
+                    i += 1
     elif menu == 'e':
         print('\nДо свидания!')
         break
