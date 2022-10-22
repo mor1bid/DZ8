@@ -126,14 +126,21 @@ while True:
                                 if day in line and call == 0:
                                     edit.writelines(line)
                                     call = 1
-                                elif day not in line:
+                                if day not in line and call == 0:
                                     edit.writelines(line)
-                                if numb not in line and call == 1:
+                                if numb not in line and day not in line and call == 1:
                                     edit.writelines(line)
-                                else:
-                                    edit.writelines(numb)
-                                    edit.write('. ')
-                                if line == ' \n':
+                                    call = 1
+                                if numb in line and call == 1 and day not in line:
+                                    edit.write(numb)
+                                    edit.write('. \n')
+                                    # numb = ''
+
+                                # if sub not in line and call == 2:
+                                #     edit.writelines(line)
+                                # elif sub in line and call == 2:
+                                #     edit.writelines('')
+                                if ' \n' in line:
                                     call = 0
                     elif choi == '2':
                         if call != 0:
