@@ -1,5 +1,4 @@
 i = 0
-prog = 1
 login = ''
 password = ''
 print('Здравствуйте!', end=' ')
@@ -8,36 +7,39 @@ while True:
         print('\nГотово!', end=' ')
     menu = input('Выберите желаемый пункт меню:\n\n(a) Студент\n(b) Преподаватель\n(c) Администратор\n(e) Завершение работы\n\n')
     if menu == 'a':
+        prog = 1
+        studlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
+        studword = input('Пароль: ')
         call = 0
         i = 0
-        while prog == 1:
-            studlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
+        while prog >= 1:
+            if prog > 1:
+                studlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
+                studword = input('Пароль: ')
             with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
                 text = lpr.readlines()
                 for line in text:
                     if '\n' in line and call == 1:
-                        login = line
+                        login = line.replace('\n', '')
                         call += 1
                     if 'Студент' in line:
                         call += 1
                     if line == '\n' and call == 2:   
                         call = 0
-            print(login)
-            studword = input('Пароль: ')
             with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
                 text = lpr.readlines()
                 for line in text:
                     if ' \n' in line and call == 1:
-                        password = line                    
+                        password = line.replace(' \n', '')                   
                     if 'Студент' in line:
                         call += 1
                     if line == '\n':
                         call = 0
-            print(password)
-            if studword not in password or studlogin not in login:
-                print('Введены неверный логин и/или пароль.')
+            if studword == password and studlogin == login:
+                prog = 0
             else:    
-                prog = 0       
+                print('Введены неверный логин и/или пароль.')
+                prog += 1     
         while i == 0:
             print('\n')
             print(studlogin, end=', ')
@@ -59,9 +61,39 @@ while True:
             else:
                 print('Ошибка!')
     elif menu == 'b':
-        i = 0
+        prog = 1
         teachlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
         teachword = input('Пароль: ')
+        call = 0
+        i = 0
+        while prog >= 1:
+            if prog > 1:
+                teachlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
+                teachword = input('Пароль: ')
+            with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
+                text = lpr.readlines()
+                for line in text:
+                    if '\n' in line and call == 1:
+                        login = line.replace('\n', '')
+                        call += 1
+                    if 'Преподаватель' in line:
+                        call += 1
+                    if line == '\n' and call == 2:
+                        call = 0
+            with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
+                text = lpr.readlines()
+                for line in text:
+                    if ' \n' in line and call == 1:
+                        password = line.replace(' \n', '')                   
+                    if 'Преподаватель' in line:
+                        call += 1
+                    if line == '\n':
+                        call = 0
+            if teachword == password and teachlogin == login:
+                prog = 0
+            else:    
+                print('Введены неверный логин и/или пароль.')
+                prog += 1
         while i == 0:
             print('\n')
             print(teachlogin, end=', ')
@@ -116,9 +148,40 @@ while True:
             else:
                 print('Ошибка!')
     elif menu == 'c':
-        i = 0
+        prog = 1
         admnlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
         admnword = input('Пароль: ')
+        call = 0
+        i = 0
+        while prog >= 1:
+            if prog > 1:
+                admnlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
+                admnword = input('Пароль: ')
+            with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
+                text = lpr.readlines()
+                for line in text:
+                    if '\n' in line and call == 1:
+                        login = line.replace('\n', '')
+                        call += 1
+                    if 'Администратор' in line:
+                        call += 1
+                    if line == '\n' and call == 2:   
+                        call = 0
+            with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
+                text = lpr.readlines()
+                for line in text:
+                    if ' \n' in line and call == 1:
+                        password = line.replace(' \n', '')                   
+                    if 'Администратор' in line:
+                        call += 1
+                    if line == '\n':
+                        call = 0
+            if admnword == password and admnlogin == login:
+                prog = 0
+            else:    
+                print('Введены неверный логин и/или пароль.')
+                prog += 1       
+        i = 0
         while i == 0:
             print('\n')
             print(admnlogin, end=', ')
