@@ -1,13 +1,44 @@
 i = 0
+prog = 1
+login = ''
+password = ''
 print('Здравствуйте!', end=' ')
 while True:
     if i == 1:
         print('\nГотово!', end=' ')
     menu = input('Выберите желаемый пункт меню:\n\n(a) Студент\n(b) Преподаватель\n(c) Администратор\n(e) Завершение работы\n\n')
     if menu == 'a':
+        call = 0
         i = 0
-        studlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
-        studword = input('Пароль: ')
+        while prog == 1:
+            studlogin = input('\nПожалуйста, введите свои имя пользователя и пароль!\n\nИмя пользователя: ')
+            with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
+                text = lpr.readlines()
+                for line in text:
+                    if 'Студент:' in line and call == 0:
+                        call = 1
+                    if 'l: ' in line and call == 1:
+                        call = 2
+                    if call == 2:
+                        login = line
+                    if ' \n' in line:
+                        call = 0
+            studword = input('Пароль: ')
+            with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
+                text = lpr.readlines()
+                for line in text:
+                    if 'Студент:' in line and call == 0:
+                        call = 1
+                    if 'p:' in line and call == 1:
+                        call = 2
+                    if ' ' not in line and call == 2:
+                        password = line
+                    if ' \n' in line:   
+                        call = 0
+            if studword not in password or studlogin not in login:
+                print('Введены неверный логин и/или пароль.')
+            else:    
+                prog = 0       
         while i == 0:
             print('\n')
             print(studlogin, end=', ')
@@ -77,10 +108,9 @@ while True:
                     with open('homework.txt', 'r', encoding='UTF-8') as delread:
                         text = delread.readlines()
                         with open('homework.txt', 'w', encoding='UTF-8') as hw:
-                            call = 0
                             hw.seek(0)
                             for line in text:
-                                if day not in line and sub not in line and call == 0:
+                                if day not in line and sub not in line:
                                     hw.write(line)
             elif answ == 'e':
                 i += 1
@@ -169,51 +199,58 @@ while True:
                     else:
                         print('Ошибка!')
             elif answ == '3':
+                g = 0
+                g2 = 0                
                 pas = input('\n(1) Логин и пароль студента\n(2) Логин и пароль преподавателя\n(3) Логин и пароль администратора\n(e) Выход\n\n')
                 if pas == '1':
                     call = 0
-                    g = 0
                     while g == 0:                            
                         yn = input('Сменить логин? y/n: ')
-                        nlogin = input('Введите новый логин: ')
                         if yn == 'y':
+                            nlogin = input('Введите новый логин: ')
                             with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
                                 text = lpr.readlines()
                                 with open('passwords.txt', 'w', encoding='UTF-8') as lpw:
                                     for line in text:
                                         if 'Студент:' in line and call == 0:
                                             lpw.writelines(line)
+                                        else:
+                                            # lpw.writelines(line)
                                             call = 1
-                                        if 'l:' in line and call == 1:
-                                            lpw.writelines(line)
+                                        if 'l: ' in line and call == 1:
                                             lpw.write(nlogin)
-                                            if '\n' in line:
-                                                call = 0
+                                        else:
+                                            lpw.write(line)                                            
+                                        if ' \n' in line:
+                                            call = 0
                                     g += 1
                         elif yn == 'n':
                             g += 1
                         else:
                             print('Ошибка')
-                    g = 0
-                    while g == 0:
+                    while g2 == 0:
                         yn = input('Сменить пароль? y/n: ')
-                        npass = input('Введите новый пароль: ')
                         if yn == 'y':
+                            npass = input('Введите новый пароль: ')
                             with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
                                 text = lpr.readlines()
                                 with open('passwords.txt', 'w', encoding='UTF-8') as lpw:
                                     for line in text:
                                         if 'Студент:' in line and call == 0:
                                             lpw.writelines(line)
+                                        else:
+                                            # lpw.writelines(line)
                                             call = 1
-                                        if 'p:' in line and call == 1:
-                                            lpw.writelines(line)
+                                        if 'p: ' in line and call == 1:
+                                            lpw.write(line)
                                             lpw.write(npass)
-                                            if '\n' in line:
-                                                call = 0
-                                    g += 1
+                                        else:
+                                            lpw.write(line)
+                                        if ' \n' in line:
+                                            call = 0
+                                    g2 += 1
                         elif yn == 'n':
-                            g += 1
+                            g2 += 1
                         else:
                             print('Ошибка')
             elif answ == 'e':
