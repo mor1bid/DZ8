@@ -218,6 +218,8 @@ while True:
                                             # lpw.writelines(line)
                                             call = 1
                                         if 'l: ' in line and call == 1:
+                                            lin = line.replace(' \n', '')
+                                            # lpw.write(lin)
                                             lpw.write(nlogin)
                                         else:
                                             lpw.write(line)                                            
@@ -234,21 +236,22 @@ while True:
                             npass = input('Введите новый пароль: ')
                             with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
                                 text = lpr.readlines()
+                                # print(list(text))
                                 with open('passwords.txt', 'w', encoding='UTF-8') as lpw:
                                     for line in text:
                                         if 'Студент:' in line and call == 0:
                                             lpw.writelines(line)
-                                        else:
-                                            # lpw.writelines(line)
+                                        if 'Студент:' not in line and call == 0:
                                             call = 1
                                         if 'p: ' in line and call == 1:
-                                            lpw.write(line)
+                                            lin = line.replace(' \n', '')
+                                            lpw.write('p: ')
                                             lpw.write(npass)
-                                        else:
+                                            lpw.write('\n')
+                                        elif 'Студент:' not in line:
                                             lpw.write(line)
                                         if ' \n' in line:
-                                            call = 0
-                                    g2 += 1
+                                            g2 = 1
                         elif yn == 'n':
                             g2 += 1
                         else:
