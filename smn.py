@@ -15,26 +15,25 @@ while True:
             with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
                 text = lpr.readlines()
                 for line in text:
-                    if 'Студент:' in line and call == 0:
-                        call = 1
-                    if 'l: ' in line and call == 1:
-                        call = 2
-                    if call == 2:
+                    if '\n' in line and call == 1:
                         login = line
-                    if ' \n' in line:
+                        call += 1
+                    if 'Студент' in line:
+                        call += 1
+                    if line == '\n' and call == 2:   
                         call = 0
+            print(login)
             studword = input('Пароль: ')
             with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
                 text = lpr.readlines()
                 for line in text:
-                    if 'Студент:' in line and call == 0:
-                        call = 1
-                    if 'p:' in line and call == 1:
-                        call = 2
-                    if ' ' not in line and call == 2:
-                        password = line
-                    if ' \n' in line:   
+                    if ' \n' in line and call == 1:
+                        password = line                    
+                    if 'Студент' in line:
+                        call += 1
+                    if line == '\n':
                         call = 0
+            print(password)
             if studword not in password or studlogin not in login:
                 print('Введены неверный логин и/или пароль.')
             else:    
