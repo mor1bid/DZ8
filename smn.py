@@ -264,60 +264,73 @@ while True:
                 g = 0
                 g2 = 0                
                 pas = input('\n(1) Логин и пароль студента\n(2) Логин и пароль преподавателя\n(3) Логин и пароль администратора\n(e) Выход\n\n')
-                if pas == '1':
-                    call = 0
-                    while g == 0:                            
-                        yn = input('Сменить логин? y/n: ')
-                        if yn == 'y':
-                            nlogin = input('Введите новый логин: ')
-                            with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
-                                text = lpr.readlines()
-                                with open('passwords.txt', 'w', encoding='UTF-8') as lpw:
-                                    for line in text:
-                                        if 'Студент:' in line and call == 0:
-                                            lpw.writelines(line)
-                                        else:
-                                            # lpw.writelines(line)
-                                            call = 1
-                                        if 'l: ' in line and call == 1:
-                                            lin = line.replace(' \n', '')
-                                            # lpw.write(lin)
-                                            lpw.write(nlogin)
-                                        else:
-                                            lpw.write(line)                                            
-                                        if ' \n' in line:
-                                            call = 0
-                                    g += 1
-                        elif yn == 'n':
-                            g += 1
-                        else:
-                            print('Ошибка')
-                    while g2 == 0:
-                        yn = input('Сменить пароль? y/n: ')
-                        if yn == 'y':
-                            npass = input('Введите новый пароль: ')
-                            with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
-                                text = lpr.readlines()
-                                # print(list(text))
-                                with open('passwords.txt', 'w', encoding='UTF-8') as lpw:
-                                    for line in text:
-                                        if 'Студент:' in line and call == 0:
-                                            lpw.writelines(line)
-                                        if 'Студент:' not in line and call == 0:
-                                            call = 1
-                                        if 'p: ' in line and call == 1:
-                                            lin = line.replace(' \n', '')
-                                            lpw.write('p: ')
-                                            lpw.write(npass)
-                                            lpw.write('\n')
-                                        elif 'Студент:' not in line:
-                                            lpw.write(line)
-                                        if ' \n' in line:
-                                            g2 = 1
-                        elif yn == 'n':
-                            g2 += 1
-                        else:
-                            print('Ошибка')
+                with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
+                    text = lpr.readlines()
+                    if pas == '1':
+                        acc = text[0]
+                    elif pas == '2':
+                        acc = text[4]
+                    elif pas == '3':
+                        acc = text[8]
+                call = 0
+                while g == 0:                            
+                    yn = input('Сменить логин? y/n: ')
+                    if yn == 'y':
+                        nlogin = input('Введите новый логин: ')
+                        with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
+                            text = lpr.readlines()
+                            with open('passwords.txt', 'w', encoding='UTF-8') as lpw:
+                                for line in text:
+                                    if line == acc and call == 0:
+                                        lpw.write(line)
+                                        call += 1
+                                    elif call == 0:
+                                        lpw.write(line)
+                                    if line != '\n' and call == 3:
+                                        lpw.write(line)
+                                        call = 0                                        
+                                    if '\n' in line and call == 1:
+                                        call += 1
+                                        line.replace('\n', '')
+                                        lpw.write(nlogin)
+                                        lpw.write('\n')
+                                    elif call == 2:
+                                        call += 1                                         
+                                g += 1
+                    elif yn == 'n':
+                        g += 1
+                    else:
+                        print('Ошибка')
+                while g2 == 0:
+                    yn = input('Сменить пароль? y/n: ')
+                    if yn == 'y':
+                        npass = input('Введите новый пароль: ')
+                        with open('passwords.txt', 'r', encoding='UTF-8') as lpr:
+                            text = lpr.readlines()
+                            with open('passwords.txt', 'w', encoding='UTF-8') as lpw:
+                                for line in text:
+                                    if line == acc and call == 0:
+                                        lpw.write(line)
+                                        call += 1
+                                    elif call == 0:
+                                        lpw.write(line)
+                                    if line != '\n' and call == 3:
+                                        lpw.write(line)
+                                        call = 0                                        
+                                    if ' \n' in line and call == 1:
+                                        call += 1
+                                        line.replace(' \n', '')
+                                        lpw.write(npass)
+                                        lpw.write(' \n\n')
+                                    elif '\n' in line and line != acc and call == 1:
+                                        lpw.write(line)
+                                    elif call == 2:
+                                        call += 1 
+                                g2 = 1
+                    elif yn == 'n':
+                        g2 += 1
+                    else:
+                        print('Ошибка')
             elif answ == 'e':
                 i += 1
     elif menu == 'e':
